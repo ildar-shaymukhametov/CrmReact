@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "@emotion/react";
 import React, { Component } from "react";
 import { Container } from "reactstrap";
 import { NavMenu } from "./NavMenu";
@@ -9,7 +11,7 @@ export class Layout extends Component {
   render() {
     return (
       <div
-        style={{
+        css={{
           display: "grid",
           gridTemplateColumns: "1fr 5fr",
           gridTemplateAreas: "'header header' 'sidebar main'",
@@ -17,7 +19,7 @@ export class Layout extends Component {
       >
         <NavMenu />
         <SideMenu />
-        <Container style={{ gridArea: "main" }}>
+        <Container css={{ gridArea: "main" }}>
           {this.props.children}
         </Container>
       </div>

@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "@emotion/react";
 import { Nav, NavItem, NavLink } from "reactstrap";
 
 export { SideMenu };
@@ -6,7 +8,7 @@ function SideMenu() {
   return (
     <aside
       className="sticky-top align-self-start p-3"
-      style={{ gridArea: "sidebar" }}
+      css={{ gridArea: "sidebar" }}
     >
       <Nav vertical pills>
         <NavItem>

@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "@emotion/react";
 import React, { Component } from "react";
 import {
   Collapse,
@@ -32,7 +34,7 @@ export class NavMenu extends Component {
 
   render() {
     return (
-      <header style={{gridArea: "header"}}>
+      <header css={{ gridArea: "header" }}>
         <Navbar
           className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3"
           light
