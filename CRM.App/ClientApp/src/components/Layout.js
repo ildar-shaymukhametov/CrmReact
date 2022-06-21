@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/react";
-import React, { Component } from "react";
+import { Component } from "react";
 import { Container } from "reactstrap";
 import { NavMenu } from "./NavMenu";
 import { SideMenu } from "./SideMenu";

@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/react";
-import React, { Component } from "react";
+import { Component } from "react";
 import {
   Collapse,
   Container,
