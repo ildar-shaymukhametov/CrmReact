@@ -8,14 +8,14 @@ import { ApplicationPaths } from "./components/api-authorization/ApiAuthorizatio
 import ApiAuthorizationRoutes from "./components/api-authorization/ApiAuthorizationRoutes";
 
 export default function App() {
-  const { isAuthenticated } = useAuth();
+  const { user } = useAuth();
   return (
     <>
       <Route
         path={ApplicationPaths.ApiAuthorizationPrefix}
         component={ApiAuthorizationRoutes}
       />
-      {isAuthenticated ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+      {user.isAuthenticated ? <AuthenticatedApp /> : <UnauthenticatedApp />}
     </>
   );
 }

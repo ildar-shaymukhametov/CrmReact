@@ -12,13 +12,13 @@ function LoginMenu() {
     pathname: `${ApplicationPaths.LogOut}`,
     state: { local: true },
   };
-  const { userName } = useAuth();
+  const { user } = useAuth();
 
   return (
     <>
       <NavItem>
         <NavLink tag={Link} className="text-dark" to={profilePath}>
-          Hello {userName}
+          Hello {user.name}
         </NavLink>
       </NavItem>
       <NavItem>
