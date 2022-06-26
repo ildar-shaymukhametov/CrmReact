@@ -7,7 +7,9 @@ import { Route } from "react-router-dom";
 import { ApplicationPaths } from "./components/api-authorization/ApiAuthorizationConstants";
 import ApiAuthorizationRoutes from "./components/api-authorization/ApiAuthorizationRoutes";
 
-export default function App() {
+export { App }
+
+function App() {
   const { user } = useAuth();
   return (
     <>
