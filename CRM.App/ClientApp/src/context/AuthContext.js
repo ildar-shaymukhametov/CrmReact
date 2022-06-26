@@ -5,15 +5,13 @@ import { useAsync } from "../utils/hooks";
 export { AuthProvider, useAuth };
 
 async function populateState() {
-  const [isAuthenticated, user] = await Promise.all([
-    authService.isAuthenticated(),
-    authService.getUser(),
-  ]);
-
-  return {
-    isAuthenticated,
-    name: user && user.name,
-  };
+  const user = await authService.getUser();
+  const userName = user && user.name;
+  return userName
+    ? {
+        name: userName,
+      }
+    : null;
 }
 
 const AuthContext = React.createContext();
@@ -28,11 +26,8 @@ function AuthProvider(props) {
     isIdle,
     isError,
     isSuccess,
-    run
-  } = useAsync({
-    isAuthenticated: false,
-    name: null,
-  });
+    run,
+  } = useAsync();
 
   useEffect(() => {
     const _subscription = authService.subscribe(() => populateState());
@@ -47,11 +42,11 @@ function AuthProvider(props) {
   const value = React.useMemo(() => ({ user }), [user]);
 
   if (isLoading || isIdle) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   if (isError) {
-    return <div>Error: {error}</div>
+    return <div>Error: {error}</div>;
   }
 
   if (isSuccess) {

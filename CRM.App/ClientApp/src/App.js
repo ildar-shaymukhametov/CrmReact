@@ -17,7 +17,7 @@ function App() {
         path={ApplicationPaths.ApiAuthorizationPrefix}
         component={ApiAuthorizationRoutes}
       />
-      {user.isAuthenticated ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+      {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
     </>
   );
 }
