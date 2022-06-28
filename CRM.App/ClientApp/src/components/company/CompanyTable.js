@@ -8,7 +8,7 @@ export { CompanyTable };
 function useCompanies() {
   const client = useClient();
   return useQuery("companies", () =>
-    client(ApiRoutes.Companies).then(data => data.companies)
+    client(ApiRoutes.Companies).then(data => data)
   );
 }
 

@@ -10,7 +10,7 @@ test("renders company table", async () => {
   const company = buildCompany();
   server.use(
     rest.get(ApiRoutes.Companies, async (req, res, ctx) => {
-      return res(ctx.json({ companies: [company] }));
+      return res(ctx.json([company]));
     })
   );
   await render(<App />, { route: `/${ApiRoutes.Companies}` });
