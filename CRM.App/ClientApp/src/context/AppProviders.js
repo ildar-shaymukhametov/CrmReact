@@ -5,7 +5,7 @@ import { QueryClientProvider } from "./QueryClient";
 
 export { AppProviders };
 
-const baseUrl = document.getElementsByTagName("base")[0].getAttribute("href");
+const baseUrl = document.getElementsByTagName("base")[0]?.getAttribute("href") ?? "/";
 
 function AppProviders({ children }) {
   return (

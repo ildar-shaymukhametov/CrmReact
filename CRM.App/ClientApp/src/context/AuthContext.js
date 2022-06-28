@@ -1,15 +1,18 @@
 import React, { useEffect } from "react";
 import authService from "../components/api-authorization/AuthorizeService";
+import { client } from "../utils/api-client";
 import { useAsync } from "../utils/hooks";
 
-export { AuthProvider, useAuth };
+export { AuthProvider, useAuth, useClient };
 
 async function populateState() {
   const user = await authService.getUser();
+  const token = await authService.getAccessToken();
   const userName = user && user.name;
   return userName
     ? {
         name: userName,
+        token,
       }
     : null;
 }
@@ -62,4 +65,13 @@ function useAuth() {
     throw new Error(`useAuth must be used within a AuthProvider`);
   }
   return context;
+}
+
+function useClient() {
+  const { user } = useAuth();
+  const token = user?.token;
+  return React.useCallback(
+    (endpoint, config) => client(endpoint, { ...config, token }),
+    [token]
+  );
 }
