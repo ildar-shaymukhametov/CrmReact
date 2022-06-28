@@ -1,12 +1,9 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
-import { ApplicationPaths } from "./components/api-authorization/ApiAuthorizationConstants";
+import { LoginActions } from "./components/api-authorization/ApiAuthorizationConstants";
+import { Login } from "./components/api-authorization/Login";
+
 export { UnauthenticatedApp };
 
 function UnauthenticatedApp() {
-  return (
-    <NavLink tag={Link} className="text-dark" to={`${ApplicationPaths.Login}`}>
-      Login
-    </NavLink>
-  );
+  return <Login action={LoginActions.Login}></Login>;
 }
