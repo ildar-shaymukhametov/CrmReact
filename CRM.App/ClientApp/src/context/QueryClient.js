@@ -19,7 +19,6 @@ function QueryClientProvider({ children }) {
     const client = new QueryClient({
       defaultOptions: {
         queries: {
-          useErrorBoundary: true,
           refetchOnWindowFocus: false,
           retry(failureCount, error) {
             if (error.status === 404) return false;
