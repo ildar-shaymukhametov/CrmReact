@@ -39,7 +39,7 @@ export class NavMenu extends Component {
           className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3"
           light
         >
-          <Container>
+          <Container className="d-flex align-items-center">
             <NavbarBrand tag={Link} to="/">
               CRM.App
             </NavbarBrand>
