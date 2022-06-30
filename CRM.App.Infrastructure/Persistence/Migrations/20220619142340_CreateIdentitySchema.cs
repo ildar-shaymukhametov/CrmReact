@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace CRM.App.Migrations
+namespace CRM.App.Infrastructure.Persistence.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {
