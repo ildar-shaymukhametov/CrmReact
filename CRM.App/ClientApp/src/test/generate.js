@@ -11,9 +11,16 @@ function buildUser() {
 function buildCompany(overrides) {
   return {
     id: faker.datatype.uuid(),
-    name: faker.company.companyName(),
     no: faker.random.numeric(),
+    name: faker.company.companyName(),
     createdAt: faker.date.past(),
+    type: faker.company.companySuffix(),
+    inn: faker.random.numeric(12),
+    address: `${faker.address.city()}, ${faker.address.streetAddress()}`,
+    ceo: faker.name.findName(),
+    phone: faker.phone.number(),
+    email: faker.internet.email(),
+    contacts: faker.internet.email(),
     ...overrides,
   };
 }

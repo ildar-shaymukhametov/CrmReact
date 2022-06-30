@@ -1,16 +1,10 @@
 import React from "react";
-import { useQuery } from "react-query";
-import { ApiRoutes } from "../../AppConstants";
-import { useClient } from "../../context/AuthContext";
+import { Link, Route } from "react-router-dom";
+import { AppRoutes } from "../../AppConstants";
+import { useCompanies } from "../../utils/companies";
+import { NewCompany } from "./NewCompany";
 
 export { CompanyTable };
-
-function useCompanies() {
-  const client = useClient();
-  return useQuery("companies", () =>
-    client(ApiRoutes.Companies).then(data => data)
-  );
-}
 
 function CompanyTable() {
   const { data, isLoading, isError } = useCompanies();
@@ -24,21 +18,45 @@ function CompanyTable() {
   }
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>No</th>
-          <th>Name</th>
-        </tr>
-      </thead>
-      <tbody>
-        {data.map(company => (
-          <tr key={company.no}>
-            <td>{company.no}</td>
-            <td>{company.name}</td>
+    <>
+      <div>
+        <Link to={AppRoutes.NewCompany}>
+          New company
+        </Link>
+        <Route path={AppRoutes.NewCompany}>
+          <NewCompany />
+        </Route>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Type</th>
+            <th>Name</th>
+            <th>Inn</th>
+            <th>Address</th>
+            <th>Ceo</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Contacts</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {data.map(company => (
+            <tr key={company.no}>
+              <td>{company.no}</td>
+              <td>{company.type}</td>
+              <td>{company.name}</td>
+              <td>{company.inn}</td>
+              <td>{company.address}</td>
+              <td>{company.ceo}</td>
+              <td>{company.phone}</td>
+              <td>{company.email}</td>
+              <td>{company.contacts}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
   );
 }
