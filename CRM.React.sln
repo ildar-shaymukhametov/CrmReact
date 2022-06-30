@@ -11,6 +11,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRM.App.Infrastructure", "C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRM.App.Application", "CRM.App.Application\CRM.App.Application.csproj", "{AD3E2095-1548-44E5-8516-1DBE11E2677C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{04303203-B177-43A3-91D5-3BECF0DF339C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.UnitTests", "tests\Application.UnitTests\Application.UnitTests.csproj", "{4C6E4A50-8278-4727-89B1-FD9B3387AE18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.IntegrationTests", "tests\Application.IntegrationTests\Application.IntegrationTests.csproj", "{51899B2D-D52C-4408-BCCE-EF512A8E0A77}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +42,17 @@ Global
 		{AD3E2095-1548-44E5-8516-1DBE11E2677C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD3E2095-1548-44E5-8516-1DBE11E2677C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD3E2095-1548-44E5-8516-1DBE11E2677C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C6E4A50-8278-4727-89B1-FD9B3387AE18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C6E4A50-8278-4727-89B1-FD9B3387AE18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C6E4A50-8278-4727-89B1-FD9B3387AE18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C6E4A50-8278-4727-89B1-FD9B3387AE18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51899B2D-D52C-4408-BCCE-EF512A8E0A77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51899B2D-D52C-4408-BCCE-EF512A8E0A77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51899B2D-D52C-4408-BCCE-EF512A8E0A77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51899B2D-D52C-4408-BCCE-EF512A8E0A77}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4C6E4A50-8278-4727-89B1-FD9B3387AE18} = {04303203-B177-43A3-91D5-3BECF0DF339C}
+		{51899B2D-D52C-4408-BCCE-EF512A8E0A77} = {04303203-B177-43A3-91D5-3BECF0DF339C}
 	EndGlobalSection
 EndGlobal
