@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRM.App.Domain", "crm.app.d
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRM.App.Infrastructure", "CRM.App.Infrastructure\CRM.App.Infrastructure.csproj", "{16C0789B-CE4E-4623-90F5-9A06D577B7FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRM.App.Application", "CRM.App.Application\CRM.App.Application.csproj", "{AD3E2095-1548-44E5-8516-1DBE11E2677C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{16C0789B-CE4E-4623-90F5-9A06D577B7FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16C0789B-CE4E-4623-90F5-9A06D577B7FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16C0789B-CE4E-4623-90F5-9A06D577B7FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD3E2095-1548-44E5-8516-1DBE11E2677C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD3E2095-1548-44E5-8516-1DBE11E2677C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD3E2095-1548-44E5-8516-1DBE11E2677C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD3E2095-1548-44E5-8516-1DBE11E2677C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
