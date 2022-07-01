@@ -1,7 +1,11 @@
-﻿namespace CRM.App.Domain.Entities;
+using CRM.App.Application.Common.Mappings;
+using CRM.App.Domain.Entities;
 
-public class Company : BaseEntity
+namespace CRM.App.Application.Companies.GetCompanies;
+
+public class CompanyVm : IMapFrom<Company>
 {
+    public int Id { get; set; }
     public string? Type { get; set; }
     public string? Name { get; set; }
     public string? Inn { get; set; }

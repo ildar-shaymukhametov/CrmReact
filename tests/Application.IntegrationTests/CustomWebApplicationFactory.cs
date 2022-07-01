@@ -26,7 +26,12 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
         builder.ConfigureServices((builder, services) =>
         {
             services.Remove<ICurrentUserService>()
-                .AddTransient(provider => Substitute.For<ICurrentUserService>().UserId.Returns(BaseTestFixture.GetCurrentUserId()));
+                .AddTransient(provider =>
+                {
+                    var service = Substitute.For<ICurrentUserService>();
+                    service.UserId.Returns(BaseTestFixture.GetCurrentUserId());
+                    return service;
+                });
 
             services.Remove<DbContextOptions<ApplicationDbContext>>()
                 .AddDbContext<ApplicationDbContext>((sp, options) =>

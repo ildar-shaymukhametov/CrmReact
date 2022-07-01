@@ -6,6 +6,7 @@ using CRM.App.Infrastructure.Identity;
 using CRM.App.Application.Common.Interfaces;
 using System.Reflection;
 using MediatR;
+using CRM.App.Domain.Entities;
 
 namespace CRM.App.Infrastructure.Persistence;
 
@@ -13,8 +14,9 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
 {
     private readonly IMediator _mediator;
 
-    public ApplicationDbContext(DbContextOptions options, IOptions<OperationalStoreOptions> operationalStoreOptions, IMediator mediator)
-        : base(options, operationalStoreOptions)
+    public DbSet<Company> Companies => Set<Company>();
+
+    public ApplicationDbContext(DbContextOptions options, IOptions<OperationalStoreOptions> operationalStoreOptions, IMediator mediator) : base(options, operationalStoreOptions)
     {
         _mediator = mediator;
     }

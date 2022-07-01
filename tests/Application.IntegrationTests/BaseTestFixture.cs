@@ -11,7 +11,15 @@ using Respawn.Graph;
 
 namespace CRM.App.Application.IntegrationTests;
 
-public partial class BaseTestFixture : IDisposable
+[CollectionDefinition("Database")]
+public class DatabaseCollection : ICollectionFixture<BaseTestFixture>
+{
+    // This class has no code, and is never created. Its purpose is simply
+    // to be the place to apply [CollectionDefinition] and all the
+    // ICollectionFixture<> interfaces.
+}
+
+public class BaseTestFixture
 {
     private static WebApplicationFactory<Program> _factory = null!;
     private static IConfiguration _configuration = null!;
@@ -27,7 +35,7 @@ public partial class BaseTestFixture : IDisposable
 
         _checkpoint = new Checkpoint
         {
-            TablesToIgnore = new[] { new Table("__EFMigrationsHistory") }
+            TablesToIgnore = new Table[] { "__EFMigrationsHistory" }
         };
     }
 
@@ -96,8 +104,7 @@ public partial class BaseTestFixture : IDisposable
         _currentUserId = null;
     }
 
-    public async Task<TEntity?> FindAsync<TEntity>(params object[] keyValues)
-        where TEntity : class
+    public async Task<TEntity?> FindAsync<TEntity>(params object[] keyValues) where TEntity : class
     {
         using var scope = _scopeFactory.CreateScope();
 
@@ -106,8 +113,7 @@ public partial class BaseTestFixture : IDisposable
         return await context.FindAsync<TEntity>(keyValues);
     }
 
-    public async Task AddAsync<TEntity>(TEntity entity)
-        where TEntity : class
+    public async Task AddAsync<TEntity>(TEntity entity) where TEntity : class
     {
         using var scope = _scopeFactory.CreateScope();
 
@@ -125,9 +131,5 @@ public partial class BaseTestFixture : IDisposable
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
         return await context.Set<TEntity>().CountAsync();
-    }
-
-    public void Dispose()
-    {
     }
 }
