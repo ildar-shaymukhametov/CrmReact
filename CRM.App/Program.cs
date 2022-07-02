@@ -16,6 +16,12 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+    app.UseSwagger();
+    app.UseSwaggerUI(o =>
+    {
+        o.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+        o.RoutePrefix = string.Empty;
+    });
 
     // Initialise and seed database
     using (var scope = app.Services.CreateScope())
@@ -44,9 +50,9 @@ app.MapControllerRoute(
     pattern: "{controller}/{action=Index}/{id?}");
 app.MapRazorPages();
 
-app.MapFallbackToFile("index.html");;
+app.MapFallbackToFile("index.html");
 
 app.Run();
 
 // Make the implicit Program class public so test projects can access it
-public partial class Program {}
+public partial class Program { }
