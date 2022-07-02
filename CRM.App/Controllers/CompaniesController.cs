@@ -1,3 +1,4 @@
+using CRM.App.Application.Companies.Commands.CreateCompany;
 using CRM.App.Application.Companies.Queries.GetCompanies;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,5 +10,11 @@ public class CompaniesController : ApiControllerBase
     public async Task<ActionResult<CompanyDto[]>> Get()
     {
         return await Mediator.Send(new GetCompaniesQuery());
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<int>> Create(CreateCompanyCommand command)
+    {
+        return await Mediator.Send(command);
     }
 }
