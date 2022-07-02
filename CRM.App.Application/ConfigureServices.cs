@@ -9,7 +9,7 @@ public static class ConfigureServices
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        services.AddAutoMapper(Assembly.GetExecutingAssembly());
+        services.AddAutoMapper(config => config.AddMaps(Assembly.GetExecutingAssembly()), Assembly.GetExecutingAssembly());
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddMediatR(Assembly.GetExecutingAssembly());
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));

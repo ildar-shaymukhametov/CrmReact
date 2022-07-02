@@ -10,12 +10,14 @@ public abstract class BaseTest : IAsyncLifetime
         _fixture = fixture;
     }
 
+#pragma warning disable CS1998
     public async Task DisposeAsync()
     {
     }
+#pragma warning restore CS1998
 
     public async Task InitializeAsync()
     {
-       await _fixture.ResetState();
+        await _fixture.ResetState();
     }
 }
