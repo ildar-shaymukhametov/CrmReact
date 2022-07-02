@@ -1,5 +1,4 @@
 using CRM.App.Application.Companies.Queries.GetCompanies;
-using CRM.App.Domain.Entities;
 
 namespace CRM.App.Application.IntegrationTests.Companies.Queries;
 
@@ -12,27 +11,12 @@ public class GetCompaniesTests : BaseTest
     {
         var user = await _fixture.RunAsDefaultUserAsync();
 
-        var company = new Company
-        {
-            Type = Faker.Company.Suffix(),
-            Name = Faker.Company.Name(),
-            Inn = Faker.RandomNumber.Next(1_000_000_000, 9_999_999_999).ToString(),
-            Address = $"{Faker.Address.City}, {Faker.Address.StreetAddress}",
-            Ceo = Faker.Name.FullName(),
-            Phone = Faker.Phone.Number(),
-            Email = Faker.Internet.Email(),
-            Contacts = Faker.Internet.FreeEmail()
-        };
+        var company = Faker.Builders.Company();
         await _fixture.AddAsync(company);
 
         var request = new GetCompaniesQuery();
         var result = await _fixture.SendAsync(request);
 
-        Assert.Collection(result, x =>
-        {
-            Assert.Equal(company.Id, x.Id);
-            Assert.Equal(company.CreatedAtUtc, BaseTestFixture.UtcNow);
-            Assert.Equal(company.CreatedBy, user.Id);
-        });
+        Assert.Collection(result, x => Assert.Equal(company.Id, x.Id));
     }
 }
