@@ -1,7 +1,7 @@
-using CRM.App.Application.Companies.GetCompanies;
+using CRM.App.Application.Companies.Queries.GetCompanies;
 using CRM.App.Domain.Entities;
 
-namespace CRM.App.Application.IntegrationTests.Companies;
+namespace CRM.App.Application.IntegrationTests.Companies.Queries;
 
 public class GetCompaniesTests : BaseTest
 {
@@ -25,7 +25,7 @@ public class GetCompaniesTests : BaseTest
         };
         await _fixture.AddAsync(company);
 
-        var request = new GetCompaniesRequest();
+        var request = new GetCompaniesQuery();
         var result = await _fixture.SendAsync(request);
 
         Assert.Collection(result, x =>

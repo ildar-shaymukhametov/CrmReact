@@ -1,9 +1,9 @@
 using CRM.App.Application.Common.Mappings;
 using CRM.App.Domain.Entities;
 
-namespace CRM.App.Application.Companies.GetCompanies;
+namespace CRM.App.Application.Companies.Queries.GetCompanies;
 
-public class CompanyVm : IMapFrom<Company>
+public class CompanyDto : IMapFrom<Company>
 {
     public int Id { get; set; }
     public string? Type { get; set; }

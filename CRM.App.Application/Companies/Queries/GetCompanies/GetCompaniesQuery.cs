@@ -4,11 +4,11 @@ using CRM.App.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace CRM.App.Application.Companies.GetCompanies;
+namespace CRM.App.Application.Companies.Queries.GetCompanies;
 
-public record GetCompaniesRequest : IRequest<CompanyVm[]>;
+public record GetCompaniesQuery : IRequest<CompanyDto[]>;
 
-public class GetCompaniesRequestHandler : IRequestHandler<GetCompaniesRequest, CompanyVm[]>
+public class GetCompaniesRequestHandler : IRequestHandler<GetCompaniesQuery, CompanyDto[]>
 {
     private readonly IApplicationDbContext _dbContext;
     private readonly IMapper _mapper;
@@ -19,11 +19,11 @@ public class GetCompaniesRequestHandler : IRequestHandler<GetCompaniesRequest, C
         _mapper = mapper;
     }
 
-    public async Task<CompanyVm[]> Handle(GetCompaniesRequest request, CancellationToken cancellationToken)
+    public async Task<CompanyDto[]> Handle(GetCompaniesQuery request, CancellationToken cancellationToken)
     {
         return await _dbContext.Companies
             .AsNoTracking()
-            .ProjectTo<CompanyVm>(_mapper.ConfigurationProvider)
+            .ProjectTo<CompanyDto>(_mapper.ConfigurationProvider)
             .ToArrayAsync();
     }
 }
