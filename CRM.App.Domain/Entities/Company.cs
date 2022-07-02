@@ -1,6 +1,6 @@
 ﻿namespace CRM.App.Domain.Entities;
 
-public class Company : BaseEntity
+public class Company : BaseAuditableEntity
 {
     public string? Type { get; set; }
     public string? Name { get; set; }

@@ -1,6 +1,7 @@
 ﻿using CRM.App.Application.Common.Interfaces;
 using CRM.App.Infrastructure.Identity;
 using CRM.App.Infrastructure.Persistence;
+using CRM.App.Infrastructure.Persistence.Interceptors;
 using CRM.App.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +14,8 @@ public static class ConfigureServices
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddScoped<AuditableEntitySaveChangesInterceptor>();
+
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), builder =>
                 builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));

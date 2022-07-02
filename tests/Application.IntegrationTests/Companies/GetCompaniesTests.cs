@@ -5,14 +5,12 @@ namespace CRM.App.Application.IntegrationTests.Companies;
 
 public class GetCompaniesTests : BaseTest
 {
-    public GetCompaniesTests(BaseTestFixture fixture) : base(fixture)
-    {
-    }
+    public GetCompaniesTests(BaseTestFixture fixture) : base(fixture) { }
 
     [Fact]
     public async Task Should_return_companies()
     {
-        await _fixture.RunAsDefaultUserAsync();
+        var user = await _fixture.RunAsDefaultUserAsync();
 
         var company = new Company
         {
@@ -30,6 +28,11 @@ public class GetCompaniesTests : BaseTest
         var request = new GetCompaniesRequest();
         var result = await _fixture.SendAsync(request);
 
-        Assert.Collection(result, x => Assert.Equal(company.Id, x.Id));
+        Assert.Collection(result, x =>
+        {
+            Assert.Equal(company.Id, x.Id);
+            Assert.Equal(company.CreatedAtUtc, BaseTestFixture.UtcNow);
+            Assert.Equal(company.CreatedBy, user.Id);
+        });
     }
 }

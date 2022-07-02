@@ -26,6 +26,8 @@ public class BaseTestFixture
     private static IServiceScopeFactory _scopeFactory = null!;
     private static Checkpoint _checkpoint = null!;
     private static string? _currentUserId;
+    public static DateTime UtcNow = Faker.Date.RandomDateTimeUtc();
+    public static DateTime Now = Faker.Date.RandomDateTime();
 
     public BaseTestFixture()
     {
@@ -53,17 +55,17 @@ public class BaseTestFixture
         return _currentUserId;
     }
 
-    public async Task<string> RunAsDefaultUserAsync()
+    public async Task<ApplicationUser> RunAsDefaultUserAsync()
     {
         return await RunAsUserAsync("test@local", "Testing1234!", Array.Empty<string>());
     }
 
-    public async Task<string> RunAsAdministratorAsync()
+    public async Task<ApplicationUser> RunAsAdministratorAsync()
     {
         return await RunAsUserAsync("administrator@local", "Administrator1234!", new[] { "Administrator" });
     }
 
-    public async Task<string> RunAsUserAsync(string userName, string password, string[] roles)
+    public async Task<ApplicationUser> RunAsUserAsync(string userName, string password, string[] roles)
     {
         using var scope = _scopeFactory.CreateScope();
 
@@ -89,7 +91,7 @@ public class BaseTestFixture
         {
             _currentUserId = user.Id;
 
-            return _currentUserId;
+            return user;
         }
 
         var errors = string.Join(Environment.NewLine, result.ToApplicationResult().Errors);

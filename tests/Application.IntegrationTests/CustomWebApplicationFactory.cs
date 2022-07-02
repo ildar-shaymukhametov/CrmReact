@@ -37,6 +37,15 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
                 .AddDbContext<ApplicationDbContext>((sp, options) =>
                     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
                         builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+
+            services.Remove<IDateTime>()
+                .AddTransient(provider =>
+                {
+                    var service = Substitute.For<IDateTime>();
+                    service.Now.Returns(BaseTestFixture.Now);
+                    service.UtcNow.Returns(BaseTestFixture.UtcNow);
+                    return service;
+                });
         });
     }
 }

@@ -37,6 +37,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\CRM.App\CRM.App.csproj" />
+    <ProjectReference Include="..\Tests.Shared\Tests.Shared.csproj" />
   </ItemGroup>
 
 </Project>
