@@ -1,9 +1,9 @@
 ﻿using CRM.App.Application.Common.Interfaces;
-using CRM.App.Infrastructure.Persistence;
 using CRM.App.Filters;
 using CRM.App.Services;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Models;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -22,6 +22,28 @@ public static class ConfigureServices
                 .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
 
         services.AddSwaggerGen();
+        services.ConfigureSwaggerGen(c =>
+        {
+            c.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
+            {
+                Type = SecuritySchemeType.ApiKey,
+                Name = "Authorization",
+                In = ParameterLocation.Header,
+                Description = "Bearer <token>",
+                Scheme = "bearer",
+                BearerFormat = "JWT"
+            });
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "bearer" }
+                    },
+                    new List<string>()
+                }
+            });
+        });
 
         services.AddRazorPages();
 

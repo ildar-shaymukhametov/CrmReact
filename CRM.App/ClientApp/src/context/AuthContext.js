@@ -8,6 +8,10 @@ export { AuthProvider, useAuth, useClient };
 async function populateState() {
   const user = await authService.getUser();
   const token = await authService.getAccessToken();
+  // todo: remove later
+  console.log("----------------------------------------------------------------------------------------------");
+  console.log(token);
+  console.log("----------------------------------------------------------------------------------------------");
   const userName = user && user.name;
   return userName
     ? {

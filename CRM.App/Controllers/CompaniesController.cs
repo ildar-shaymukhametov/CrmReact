@@ -1,9 +1,11 @@
 using CRM.App.Application.Companies.Commands.CreateCompany;
 using CRM.App.Application.Companies.Queries.GetCompanies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CRM.App.Controllers;
 
+[Authorize]
 public class CompaniesController : ApiControllerBase
 {
     [HttpGet]
