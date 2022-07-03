@@ -17,7 +17,6 @@ public static class ConfigureServices
 
         services.AddHttpContextAccessor();
 
-        services.AddRouting(options => options.LowercaseUrls = true);
         services.AddControllersWithViews(options =>
             options.Filters.Add<ApiExceptionFilterAttribute>())
                 .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
