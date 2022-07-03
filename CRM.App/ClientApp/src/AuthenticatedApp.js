@@ -5,7 +5,7 @@ import { Home } from "./components/Home";
 import { FetchData } from "./components/FetchData";
 import { Counter } from "./components/Counter";
 import AuthorizeRoute from "./components/api-authorization/AuthorizeRoute";
-import { ApiRoutes, AppRoutes } from "./AppConstants";
+import { AppRoutes } from "./AppConstants";
 import { CompanyTable } from "./components/company/CompanyTable";
 
 export { AuthenticatedApp };
