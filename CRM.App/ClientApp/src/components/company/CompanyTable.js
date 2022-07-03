@@ -30,7 +30,7 @@ function CompanyTable() {
       <table>
         <thead>
           <tr>
-            <th>No</th>
+            <th>Id</th>
             <th>Type</th>
             <th>Name</th>
             <th>Inn</th>
@@ -43,8 +43,8 @@ function CompanyTable() {
         </thead>
         <tbody>
           {data.map(company => (
-            <tr key={company.no}>
-              <td>{company.no}</td>
+            <tr key={company.id}>
+              <td>{company.id}</td>
               <td>{company.type}</td>
               <td>{company.name}</td>
               <td>{company.inn}</td>

@@ -16,9 +16,16 @@ import { ApiRoutes, AppRoutes } from "../AppConstants";
 test("renders company table", async () => {
   const company = await renderTable();
 
-  const table = screen.getByRole("table");
-  expect(table).toContainElement(screen.getByText(company.name));
-  expect(table).toContainElement(screen.getByText(company.no));
+  const inTable = within(screen.getByRole("table"));
+  expect(inTable.getByText(company.id)).toBeInTheDocument();
+  expect(inTable.getByText(company.type)).toBeInTheDocument();
+  expect(inTable.getByText(company.name)).toBeInTheDocument();
+  expect(inTable.getByText(company.inn)).toBeInTheDocument();
+  expect(inTable.getByText(company.address)).toBeInTheDocument();
+  expect(inTable.getByText(company.ceo)).toBeInTheDocument();
+  expect(inTable.getByText(company.phone)).toBeInTheDocument();
+  expect(inTable.getByText(company.email)).toBeInTheDocument();
+  expect(inTable.getByText(company.contacts)).toBeInTheDocument();
 });
 
 test("creates new company", async () => {
@@ -75,6 +82,7 @@ test("creates new company", async () => {
   });
 
   const inTable = within(screen.getByRole("table"));
+  expect(inTable.getByText(company.id)).toBeInTheDocument();
   expect(inTable.getByText(company.type)).toBeInTheDocument();
   expect(inTable.getByText(company.name)).toBeInTheDocument();
   expect(inTable.getByText(company.inn)).toBeInTheDocument();

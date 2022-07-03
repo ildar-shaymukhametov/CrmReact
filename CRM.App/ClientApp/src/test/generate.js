@@ -10,8 +10,7 @@ function buildUser() {
 
 function buildCompany(overrides) {
   return {
-    id: faker.datatype.uuid(),
-    no: faker.random.numeric(),
+    id: faker.random.numeric(),
     name: faker.company.companyName(),
     createdAt: faker.date.past(),
     type: faker.company.companySuffix(),
