@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/react";
+import { Link } from "react-router-dom";
 import { Nav, NavItem, NavLink } from "reactstrap";
 
 export { SideMenu };
@@ -23,8 +24,8 @@ function SideMenu() {
           <NavLink href="#">Another Link</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink disabled href="#">
-            Disabled Link
+          <NavLink tag={Link} to="/companies">
+            Companies
           </NavLink>
         </NavItem>
       </Nav>
