@@ -6,10 +6,7 @@ function useSafeDispatch(dispatch) {
     mounted.current = true;
     return () => (mounted.current = false);
   }, []);
-  return React.useCallback(
-    (...args) => (mounted.current ? dispatch(...args) : void 0),
-    [dispatch]
-  );
+  return React.useCallback((...args) => (mounted.current ? dispatch(...args) : void 0), [dispatch]);
 }
 
 const defaultInitialState = { status: "idle", data: null, error: null };
@@ -25,18 +22,9 @@ function useAsync(initialState) {
 
   const safeSetState = useSafeDispatch(setState);
 
-  const setData = React.useCallback(
-    (data) => safeSetState({ data, status: "resolved" }),
-    [safeSetState]
-  );
-  const setError = React.useCallback(
-    (error) => safeSetState({ error, status: "rejected" }),
-    [safeSetState]
-  );
-  const reset = React.useCallback(
-    () => safeSetState(initialStateRef.current),
-    [safeSetState]
-  );
+  const setData = React.useCallback((data) => safeSetState({ data, status: "resolved" }), [safeSetState]);
+  const setError = React.useCallback((error) => safeSetState({ error, status: "rejected" }), [safeSetState]);
+  const reset = React.useCallback(() => safeSetState(initialStateRef.current), [safeSetState]);
 
   const run = React.useCallback(
     (promise) => {

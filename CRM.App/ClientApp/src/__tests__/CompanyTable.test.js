@@ -50,7 +50,9 @@ test("creates new company", async () => {
     })
   );
 
-  const createNewCompanyButton = screen.getByRole("button", { name: /create new company/i });
+  const createNewCompanyButton = screen.getByRole("button", {
+    name: /create new company/i,
+  });
   await userEvent.click(createNewCompanyButton);
   expect(createNewCompanyButton).toBeDisabled();
 

@@ -7,16 +7,13 @@ import { Route } from "react-router-dom";
 import { ApplicationPaths } from "./components/api-authorization/ApiAuthorizationConstants";
 import ApiAuthorizationRoutes from "./components/api-authorization/ApiAuthorizationRoutes";
 
-export { App }
+export { App };
 
 function App() {
   const { user } = useAuth();
   return (
     <>
-      <Route
-        path={ApplicationPaths.ApiAuthorizationPrefix}
-        component={ApiAuthorizationRoutes}
-      />
+      <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
       {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
     </>
   );
