@@ -1,8 +1,7 @@
 import React from "react";
-import { Link, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AppRoutes } from "../../AppConstants";
 import { useCompanies } from "../../utils/companies";
-import { NewCompany } from "./NewCompany";
 
 export { CompanyTable };
 
@@ -20,12 +19,7 @@ function CompanyTable() {
   return (
     <>
       <div>
-        <Link to={AppRoutes.NewCompany}>
-          New company
-        </Link>
-        <Route path={AppRoutes.NewCompany}>
-          <NewCompany />
-        </Route>
+        <Link to={AppRoutes.NewCompany}>New company</Link>
       </div>
       <table>
         <thead>

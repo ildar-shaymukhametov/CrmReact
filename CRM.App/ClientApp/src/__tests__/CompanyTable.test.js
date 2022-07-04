@@ -1,15 +1,7 @@
 import React from "react";
 import { buildCompany } from "../test/generate";
 import { rest, server } from "../test/server";
-import {
-  login,
-  render,
-  screen,
-  userEvent,
-  waitForLoadingToFinish,
-  within,
-  waitFor,
-} from "../test/utils";
+import { login, render, screen, userEvent, waitForLoadingToFinish, within, waitFor } from "../test/utils";
 import { App } from "../App";
 import { ApiRoutes, AppRoutes } from "../AppConstants";
 
@@ -17,27 +9,16 @@ test("renders company table", async () => {
   const company = await renderTable();
 
   const inTable = within(screen.getByRole("table"));
-  expect(inTable.getByText(company.id)).toBeInTheDocument();
-  expect(inTable.getByText(company.type)).toBeInTheDocument();
-  expect(inTable.getByText(company.name)).toBeInTheDocument();
-  expect(inTable.getByText(company.inn)).toBeInTheDocument();
-  expect(inTable.getByText(company.address)).toBeInTheDocument();
-  expect(inTable.getByText(company.ceo)).toBeInTheDocument();
-  expect(inTable.getByText(company.phone)).toBeInTheDocument();
-  expect(inTable.getByText(company.email)).toBeInTheDocument();
-  expect(inTable.getByText(company.contacts)).toBeInTheDocument();
+  expectCompanyToBeInTable(inTable, company);
 });
 
 test("creates new company", async () => {
   await renderTable();
-  screen.debug();
 
-  expect(
-    screen.queryByRole("heading", { name: /create a new company/i })
-  ).not.toBeInTheDocument();
+  expect(screen.queryByRole("heading", { name: /create a new company/i })).not.toBeInTheDocument();
 
-  const newCompany = screen.getByRole("link", { name: /new company/i });
-  await userEvent.click(newCompany);
+  const newCompanyButton = screen.getByRole("link", { name: /new company/i });
+  await userEvent.click(newCompanyButton);
 
   await screen.findByRole("heading", { name: /create a new company/i });
 
@@ -51,7 +32,6 @@ test("creates new company", async () => {
   const contacts = screen.getByRole("textbox", { name: /contacts/i });
 
   const company = buildCompany();
-
   await userEvent.type(type, company.type);
   await userEvent.type(name, company.name);
   await userEvent.type(inn, company.inn);
@@ -62,26 +42,26 @@ test("creates new company", async () => {
   await userEvent.type(contacts, company.contacts);
 
   server.resetHandlers(
+    rest.post(ApiRoutes.Companies, async (req, res, ctx) => {
+      return res(ctx.json(company.id));
+    }),
     rest.get(ApiRoutes.Companies, async (req, res, ctx) => {
       return res(ctx.json([company]));
     })
   );
 
-  const createNewCompany = screen.getByRole("button", {
-    name: /create new company/i,
-  });
-  await userEvent.click(createNewCompany);
-  expect(createNewCompany).toBeDisabled();
+  const createNewCompanyButton = screen.getByRole("button", { name: /create new company/i });
+  await userEvent.click(createNewCompanyButton);
+  expect(createNewCompanyButton).toBeDisabled();
 
   await waitForLoadingToFinish();
-
   await waitFor(() => {
-    expect(
-      screen.queryByRole("heading", { name: /create a new company/i })
-    ).not.toBeInTheDocument();
+    const inTable = within(screen.getByRole("table"));
+    expectCompanyToBeInTable(inTable, company);
   });
+});
 
-  const inTable = within(screen.getByRole("table"));
+function expectCompanyToBeInTable(inTable, company) {
   expect(inTable.getByText(company.id)).toBeInTheDocument();
   expect(inTable.getByText(company.type)).toBeInTheDocument();
   expect(inTable.getByText(company.name)).toBeInTheDocument();
@@ -91,7 +71,7 @@ test("creates new company", async () => {
   expect(inTable.getByText(company.phone)).toBeInTheDocument();
   expect(inTable.getByText(company.email)).toBeInTheDocument();
   expect(inTable.getByText(company.contacts)).toBeInTheDocument();
-});
+}
 
 async function renderTable() {
   login();

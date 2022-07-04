@@ -1,17 +1,11 @@
-import {
-  render as rtlRender,
-  screen,
-  waitForElementToBeRemoved,
-} from "@testing-library/react";
+import { render as rtlRender, screen, waitForElementToBeRemoved } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import authService from "../components/api-authorization/AuthorizeService";
 import { AppProviders } from "../context/AppProviders";
 import { buildUser } from "./generate";
 
 async function render(ui, { route, ...renderOptions } = {}) {
-  if (route) {
-    window.history.pushState({}, "Test page", route);
-  }
+  window.history.pushState({}, "Test page", route);
 
   const returnValue = {
     ...rtlRender(ui, { wrapper: AppProviders, ...renderOptions }),
