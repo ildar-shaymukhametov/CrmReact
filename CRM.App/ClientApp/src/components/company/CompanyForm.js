@@ -8,6 +8,8 @@ export { CompanyForm };
 
 const validationSchema = Yup.object({
   name: Yup.string().required().max(200),
+  email: Yup.string().email(),
+  inn: Yup.string().matches(/^\d{10}$/),
 });
 
 function CompanyForm({
