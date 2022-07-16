@@ -1,6 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Button, Table } from "reactstrap";
+import { Link, useLocation } from "react-router-dom";
+import { Alert, Button, Table } from "reactstrap";
 import { AppRoutes } from "../../AppConstants";
 import { useCompanies } from "../../utils/companies";
 
@@ -8,6 +8,7 @@ export { CompanyTable };
 
 function CompanyTable() {
   const { data, isLoading, isError } = useCompanies();
+  const { state } = useLocation();
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -19,8 +20,13 @@ function CompanyTable() {
 
   return (
     <>
+      {state?.isCompanyCreated ? (
+        <Alert color="success">New company created: {state?.companyId}</Alert>
+      ) : null}
       <div className="mb-2">
-        <Button color="success" tag={Link} to={AppRoutes.NewCompany}>New company</Button>
+        <Button color="success" tag={Link} to={AppRoutes.NewCompany}>
+          New company
+        </Button>
       </div>
       <Table striped>
         <thead>
@@ -37,7 +43,7 @@ function CompanyTable() {
           </tr>
         </thead>
         <tbody>
-          {data.map(company => (
+          {data.map((company) => (
             <tr key={company.id}>
               <td>{company.id}</td>
               <td>{company.type}</td>

@@ -1,19 +1,27 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { ApiRoutes } from "../AppConstants";
+import { useNavigate } from "react-router-dom";
+import { ApiRoutes, AppRoutes } from "../AppConstants";
 import { useClient } from "../context/AuthContext";
 
 export { useCompanies, useCreateCompany };
 
 function useCompanies() {
   const client = useClient();
-  return useQuery("companies", () => client(ApiRoutes.Companies).then((data) => data));
+  return useQuery("companies", () =>
+    client(ApiRoutes.Companies).then((data) => data)
+  );
 }
 
 function useCreateCompany() {
   const client = useClient();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   return useMutation((data) => client(ApiRoutes.Companies, { data }), {
     onSettled: () => queryClient.invalidateQueries("companies"),
+    onSuccess: (data) =>
+      navigate(AppRoutes.Companies, {
+        state: { isCompanyCreated: true, companyId: data },
+      }),
   });
 }
