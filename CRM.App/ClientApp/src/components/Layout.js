@@ -13,14 +13,13 @@ export class Layout extends Component {
       <div
         css={{
           display: "grid",
-          columnGap: "1rem",
           gridTemplateColumns: "1fr 5fr",
           gridTemplateAreas: "'header header' 'sidebar main'",
         }}
       >
         <NavMenu />
         <SideMenu />
-        <main css={{ gridArea: "main", padding: "1rem 1.5rem" }}>
+        <main css={{ gridArea: "main", padding: "1rem 2rem" }}>
           <Outlet />
         </main>
       </div>
