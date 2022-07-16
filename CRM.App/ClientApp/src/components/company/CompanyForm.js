@@ -1,18 +1,17 @@
 import React from "react";
-import { Form, FormGroup, Input, Label } from "reactstrap";
-import { LoadingButton } from "../lib";
-import { useFormik } from "formik";
+import { Form, FormGroup } from "reactstrap";
+import { FormInput, LoadingButton } from "../lib";
+import { Formik } from "formik";
 import * as Yup from "yup";
 
 export { CompanyForm };
 
 const validationSchema = Yup.object({
-  name: Yup.string().required().max(200)
+  name: Yup.string().required().max(200),
 });
 
 function CompanyForm({
   onSubmit,
-  isLoading,
   initialValues = {
     type: "",
     name: "",
@@ -24,82 +23,43 @@ function CompanyForm({
     inn: "",
   },
 }) {
-  const { handleSubmit, handleChange, handleBlur, values, errors, touched } =
-    useFormik({
-      initialValues,
-      onSubmit,
-      validationSchema,
-    });
-
   return (
-    <Form onSubmit={handleSubmit}>
-      <FormGroup>
-        <Label for="type">Type</Label>
-        <Input
-          id="type"
-          name="type"
-          value={values.type}
-          onChange={handleChange}
-        />
-      </FormGroup>
-      <FormGroup>
-        <Label for="name">Name</Label>
-        <Input
-          id="name"
-          name="name"
-          value={values.name}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-        {touched.name && errors.name ? <div>{errors.name}</div> : null}
-      </FormGroup>
-      <FormGroup>
-        <Label for="inn">Inn</Label>
-        <Input id="inn" name="inn" value={values.inn} onChange={handleChange} />
-      </FormGroup>
-      <FormGroup>
-        <Label for="address">Address</Label>
-        <Input
-          id="address"
-          name="address"
-          value={values.address}
-          onChange={handleChange}
-        />
-      </FormGroup>
-      <FormGroup>
-        <Label for="ceo">Ceo</Label>
-        <Input id="ceo" name="ceo" value={values.ceo} onChange={handleChange} />
-      </FormGroup>
-      <FormGroup>
-        <Label for="phone">Phone</Label>
-        <Input
-          id="phone"
-          name="phone"
-          value={values.phone}
-          onChange={handleChange}
-        />
-      </FormGroup>
-      <FormGroup>
-        <Label for="email">Email</Label>
-        <Input
-          id="email"
-          name="email"
-          value={values.email}
-          onChange={handleChange}
-        />
-      </FormGroup>
-      <FormGroup>
-        <Label for="contacts">Contacts</Label>
-        <Input
-          id="contacts"
-          name="contacts"
-          value={values.contacts}
-          onChange={handleChange}
-        />
-      </FormGroup>
-      <LoadingButton type="submit" isLoading={isLoading}>
-        Create new company
-      </LoadingButton>
-    </Form>
+    <Formik
+      initialValues={{ ...initialValues }}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
+    >
+      {({ isSubmitting, handleSubmit }) => (
+        <Form onSubmit={handleSubmit}>
+          <FormGroup>
+            <FormInput label="Type" id="type" name="type" />
+          </FormGroup>
+          <FormGroup>
+            <FormInput label="Name" id="name" name="name" />
+          </FormGroup>
+          <FormGroup>
+            <FormInput label="Inn" id="inn" name="inn" />
+          </FormGroup>
+          <FormGroup>
+            <FormInput label="Address" id="address" name="address" />
+          </FormGroup>
+          <FormGroup>
+            <FormInput label="Ceo" id="ceo" name="ceo" />
+          </FormGroup>
+          <FormGroup>
+            <FormInput label="Phone" id="phone" name="phone" />
+          </FormGroup>
+          <FormGroup>
+            <FormInput label="Email" id="email" name="email" />
+          </FormGroup>
+          <FormGroup>
+            <FormInput label="Contacts" id="contacts" name="contacts" />
+          </FormGroup>
+          <LoadingButton type="submit" isLoading={isSubmitting}>
+            Create new company
+          </LoadingButton>
+        </Form>
+      )}
+    </Formik>
   );
 }

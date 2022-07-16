@@ -10,7 +10,7 @@ export { NewCompany };
 
 function NewCompany() {
   const { mutateAsync: handleCreateCompany } = useCreateCompany();
-  const { isLoading, isSuccess, isError, error, run, reset } = useAsync();
+  const { isSuccess, isError, error, run, reset } = useAsync();
 
   function handleSubmit(data) {
     if (isError) {
@@ -30,7 +30,7 @@ function NewCompany() {
       {isError ? (
         <Alert color="danger">Failed to create a new company: {error}</Alert>
       ) : null}
-      <CompanyForm isLoading={isLoading} onSubmit={handleSubmit} />
+      <CompanyForm onSubmit={handleSubmit} />
     </>
   );
 }
