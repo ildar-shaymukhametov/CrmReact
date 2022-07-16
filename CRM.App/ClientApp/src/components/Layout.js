@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/react";
 import { Component } from "react";
+import { Outlet } from "react-router-dom";
 import { Container } from "reactstrap";
 import { NavMenu } from "./NavMenu";
 import { SideMenu } from "./SideMenu";
@@ -19,7 +20,9 @@ export class Layout extends Component {
       >
         <NavMenu />
         <SideMenu />
-        <Container css={{ gridArea: "main" }}>{this.props.children}</Container>
+        <Container css={{ gridArea: "main" }}>
+          <Outlet />
+        </Container>
       </div>
     );
   }

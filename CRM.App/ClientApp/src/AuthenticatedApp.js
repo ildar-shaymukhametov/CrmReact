@@ -12,14 +12,14 @@ export { AuthenticatedApp };
 
 function AuthenticatedApp() {
   return (
-    <Layout>
-      <Routes>
+    <Routes>
+      <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/counter" element={<Counter />} />
         <Route path="/fetch-data" element={<FetchData />} />
         <Route path={AppRoutes.Companies} element={<CompanyTable />} />
         <Route path={AppRoutes.NewCompany} element={<NewCompany />} />
-      </Routes>
-    </Layout>
+      </Route>
+    </Routes>
   );
 }
