@@ -7,22 +7,22 @@ import { useAuth } from "../../context/AuthContext";
 export { LoginMenu };
 
 function LoginMenu() {
-  const profilePath = `${ApplicationPaths.Profile}`;
-  const logoutPath = {
-    pathname: `${ApplicationPaths.LogOut}`,
-    state: { local: true },
-  };
   const { user } = useAuth();
 
   return (
     <>
       <NavItem>
-        <NavLink tag={Link} className="text-dark" to={profilePath}>
+        <NavLink tag={Link} className="text-dark" to={ApplicationPaths.Profile}>
           Hello {user.name}
         </NavLink>
       </NavItem>
       <NavItem>
-        <NavLink tag={Link} className="text-dark" to={logoutPath}>
+        <NavLink
+          tag={Link}
+          className="text-dark"
+          to={ApplicationPaths.LogOut}
+          state={{ local: true }}
+        >
           Logout
         </NavLink>
       </NavItem>

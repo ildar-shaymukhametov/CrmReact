@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import { Home } from "./components/Home";
 import { FetchData } from "./components/FetchData";
@@ -13,13 +13,13 @@ export { AuthenticatedApp };
 function AuthenticatedApp() {
   return (
     <Layout>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/counter" component={Counter} />
-        <Route path="/fetch-data" component={FetchData} />
-        <Route exact path={AppRoutes.Companies} component={CompanyTable} />
-        <Route path={AppRoutes.NewCompany} component={NewCompany} />
-      </Switch>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/counter" element={<Counter />} />
+        <Route path="/fetch-data" element={<FetchData />} />
+        <Route path={AppRoutes.Companies} element={<CompanyTable />} />
+        <Route path={AppRoutes.NewCompany} element={<NewCompany />} />
+      </Routes>
     </Layout>
   );
 }

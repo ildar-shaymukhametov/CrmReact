@@ -3,7 +3,7 @@ import { Alert } from "reactstrap";
 import { CompanyForm } from "./CompanyForm";
 import { useAsync } from "../../utils/hooks";
 import { useCreateCompany } from "../../utils/companies";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { AppRoutes } from "../../AppConstants";
 
 export { NewCompany };
@@ -21,7 +21,7 @@ function NewCompany() {
   }
 
   if (isSuccess) {
-    return <Redirect to={AppRoutes.Companies} />;
+    return <Navigate to={AppRoutes.Companies} />;
   }
 
   return (

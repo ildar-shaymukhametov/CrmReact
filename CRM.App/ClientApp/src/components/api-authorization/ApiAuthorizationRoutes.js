@@ -1,58 +1,48 @@
-import React, { Component, Fragment } from "react";
-import { Route } from "react-router";
+import React, { Component } from "react";
+import { Route, Routes } from "react-router-dom";
 import { Login } from "./Login";
 import { Logout } from "./Logout";
-import {
-  ApplicationPaths,
-  LoginActions,
-  LogoutActions,
-} from "./ApiAuthorizationConstants";
+import { ApplicationPaths, LoginActions, LogoutActions } from "./ApiAuthorizationConstants";
 
 export default class ApiAuthorizationRoutes extends Component {
   render() {
     return (
-      <Fragment>
-        <Route
-          path={ApplicationPaths.Login}
-          render={() => loginAction(LoginActions.Login)}
-        />
-        <Route
-          path={ApplicationPaths.LoginFailed}
-          render={() => loginAction(LoginActions.LoginFailed)}
-        />
-        <Route
-          path={ApplicationPaths.LoginCallback}
-          render={() => loginAction(LoginActions.LoginCallback)}
-        />
-        <Route
-          path={ApplicationPaths.Profile}
-          render={() => loginAction(LoginActions.Profile)}
-        />
-        <Route
-          path={ApplicationPaths.Register}
-          render={() => loginAction(LoginActions.Register)}
-        />
-        <Route
-          path={ApplicationPaths.LogOut}
-          render={() => logoutAction(LogoutActions.Logout)}
-        />
-        <Route
-          path={ApplicationPaths.LogOutCallback}
-          render={() => logoutAction(LogoutActions.LogoutCallback)}
-        />
-        <Route
-          path={ApplicationPaths.LoggedOut}
-          render={() => logoutAction(LogoutActions.LoggedOut)}
-        />
-      </Fragment>
+      <Routes>
+        <Route path={ApplicationPaths.ApiAuthorizationPrefix}>
+          <Route
+            path={ApplicationPaths.Login}
+            element={<Login action={LoginActions.Login}></Login>}
+          />
+          <Route
+            path={ApplicationPaths.LoginFailed}
+            element={<Login action={LoginActions.LoginFailed}></Login>}
+          />
+          <Route
+            path={ApplicationPaths.LoginCallback}
+            element={<Login action={LoginActions.LoginCallback}></Login>}
+          />
+          <Route
+            path={ApplicationPaths.Profile}
+            element={<Login action={LoginActions.Profile}></Login>}
+          />
+          <Route
+            path={ApplicationPaths.Register}
+            element={<Login action={LoginActions.Register}></Login>}
+          />
+          <Route
+            path={ApplicationPaths.LogOut}
+            element={<Logout action={LogoutActions.Logout}></Logout>}
+          />
+          <Route
+            path={ApplicationPaths.LogOutCallback}
+            element={<Logout action={LogoutActions.LogoutCallback}></Logout>}
+          />
+          <Route
+            path={ApplicationPaths.LoggedOut}
+            element={<Logout action={LogoutActions.LoggedOut}></Logout>}
+          />
+        </Route>
+      </Routes>
     );
   }
-}
-
-function loginAction(name) {
-  return <Login action={name}></Login>;
-}
-
-function logoutAction(name) {
-  return <Logout action={name}></Logout>;
 }
