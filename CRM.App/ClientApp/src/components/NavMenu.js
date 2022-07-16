@@ -3,7 +3,6 @@ import { jsx } from "@emotion/react";
 import { Component } from "react";
 import {
   Collapse,
-  Container,
   Navbar,
   NavbarBrand,
   NavbarToggler,
@@ -36,39 +35,37 @@ export class NavMenu extends Component {
     return (
       <header css={{ gridArea: "header" }}>
         <Navbar
-          className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3"
+          className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3 px-3"
           light
         >
-          <Container className="d-flex align-items-center">
-            <NavbarBrand tag={Link} to="/">
-              CRM.App
-            </NavbarBrand>
-            <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-            <Collapse
-              className="d-sm-inline-flex flex-sm-row-reverse"
-              isOpen={!this.state.collapsed}
-              navbar
-            >
-              <ul className="navbar-nav flex-grow">
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/">
-                    Home
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/counter">
-                    Counter
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/fetch-data">
-                    Fetch data
-                  </NavLink>
-                </NavItem>
-                <LoginMenu></LoginMenu>
-              </ul>
-            </Collapse>
-          </Container>
+          <NavbarBrand tag={Link} to="/">
+            CRM.App
+          </NavbarBrand>
+          <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
+          <Collapse
+            className="d-sm-inline-flex flex-sm-row-reverse"
+            isOpen={!this.state.collapsed}
+            navbar
+          >
+            <ul className="navbar-nav flex-grow">
+              <NavItem>
+                <NavLink tag={Link} className="text-dark" to="/">
+                  Home
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink tag={Link} className="text-dark" to="/counter">
+                  Counter
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink tag={Link} className="text-dark" to="/fetch-data">
+                  Fetch data
+                </NavLink>
+              </NavItem>
+              <LoginMenu></LoginMenu>
+            </ul>
+          </Collapse>
         </Navbar>
       </header>
     );
