@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form, FormGroup, Input, Label } from "reactstrap";
 import { LoadingButton } from "../lib";
+import { useFormik } from "formik";
 
 export { CompanyForm };
 
 function CompanyForm({
   onSubmit,
   isLoading,
-  initialState = {
+  initialValues = {
     type: "",
     name: "",
     address: "",
@@ -18,22 +19,10 @@ function CompanyForm({
     inn: "",
   },
 }) {
-  const [state, setState] = useState(initialState);
-
-  function handleChange(event) {
-    const {
-      target: { name, value },
-    } = event;
-    setState(prevState => ({
-      ...prevState,
-      [name]: value,
-    }));
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    onSubmit(state);
-  }
+  const { handleSubmit, handleChange, values } = useFormik({
+    initialValues,
+    onSubmit,
+  });
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -42,7 +31,7 @@ function CompanyForm({
         <Input
           id="type"
           name="type"
-          value={state.type}
+          value={values.type}
           onChange={handleChange}
         />
       </FormGroup>
@@ -51,33 +40,33 @@ function CompanyForm({
         <Input
           id="name"
           name="name"
-          value={state.name}
+          value={values.name}
           onChange={handleChange}
         />
       </FormGroup>
       <FormGroup>
         <Label for="inn">Inn</Label>
-        <Input id="inn" name="inn" value={state.inn} onChange={handleChange} />
+        <Input id="inn" name="inn" value={values.inn} onChange={handleChange} />
       </FormGroup>
       <FormGroup>
         <Label for="address">Address</Label>
         <Input
           id="address"
           name="address"
-          value={state.address}
+          value={values.address}
           onChange={handleChange}
         />
       </FormGroup>
       <FormGroup>
         <Label for="ceo">Ceo</Label>
-        <Input id="ceo" name="ceo" value={state.ceo} onChange={handleChange} />
+        <Input id="ceo" name="ceo" value={values.ceo} onChange={handleChange} />
       </FormGroup>
       <FormGroup>
         <Label for="phone">Phone</Label>
         <Input
           id="phone"
           name="phone"
-          value={state.phone}
+          value={values.phone}
           onChange={handleChange}
         />
       </FormGroup>
@@ -86,7 +75,7 @@ function CompanyForm({
         <Input
           id="email"
           name="email"
-          value={state.email}
+          value={values.email}
           onChange={handleChange}
         />
       </FormGroup>
@@ -95,11 +84,13 @@ function CompanyForm({
         <Input
           id="contacts"
           name="contacts"
-          value={state.contacts}
+          value={values.contacts}
           onChange={handleChange}
         />
       </FormGroup>
-      <LoadingButton isLoading={isLoading}>Create new company</LoadingButton>
+      <LoadingButton type="submit" isLoading={isLoading}>
+        Create new company
+      </LoadingButton>
     </Form>
   );
 }
