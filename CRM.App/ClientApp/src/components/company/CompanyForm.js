@@ -5,6 +5,15 @@ import { useFormik } from "formik";
 
 export { CompanyForm };
 
+function validate(values) {
+  const errors = {};
+  if (!values.name) {
+    errors.name = "Required";
+  }
+
+  return errors;
+}
+
 function CompanyForm({
   onSubmit,
   isLoading,
@@ -19,10 +28,12 @@ function CompanyForm({
     inn: "",
   },
 }) {
-  const { handleSubmit, handleChange, values } = useFormik({
-    initialValues,
-    onSubmit,
-  });
+  const { handleSubmit, handleChange, handleBlur, values, errors, touched } =
+    useFormik({
+      initialValues,
+      onSubmit,
+      validate,
+    });
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -42,7 +53,9 @@ function CompanyForm({
           name="name"
           value={values.name}
           onChange={handleChange}
+          onBlur={handleBlur}
         />
+        {touched.name && errors.name ? <div>{errors.name}</div> : null}
       </FormGroup>
       <FormGroup>
         <Label for="inn">Inn</Label>
