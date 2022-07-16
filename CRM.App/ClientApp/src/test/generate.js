@@ -14,7 +14,7 @@ function buildCompany(overrides) {
     name: faker.company.companyName(),
     createdAt: faker.date.past(),
     type: faker.company.companySuffix(),
-    inn: faker.random.numeric(12),
+    inn: faker.random.numeric(10),
     address: `${faker.address.city()}, ${faker.address.streetAddress()}`,
     ceo: faker.name.findName(),
     phone: faker.phone.number(),
