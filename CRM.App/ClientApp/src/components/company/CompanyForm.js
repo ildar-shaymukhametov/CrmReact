@@ -2,17 +2,13 @@ import React from "react";
 import { Form, FormGroup, Input, Label } from "reactstrap";
 import { LoadingButton } from "../lib";
 import { useFormik } from "formik";
+import * as Yup from "yup";
 
 export { CompanyForm };
 
-function validate(values) {
-  const errors = {};
-  if (!values.name) {
-    errors.name = "Required";
-  }
-
-  return errors;
-}
+const validationSchema = Yup.object({
+  name: Yup.string().required().max(200)
+});
 
 function CompanyForm({
   onSubmit,
@@ -32,7 +28,7 @@ function CompanyForm({
     useFormik({
       initialValues,
       onSubmit,
-      validate,
+      validationSchema,
     });
 
   return (
