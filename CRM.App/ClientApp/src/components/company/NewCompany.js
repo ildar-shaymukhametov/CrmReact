@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert } from "reactstrap";
+import { Alert, Container } from "reactstrap";
 import { CompanyForm } from "./CompanyForm";
 import { useAsync } from "../../utils/hooks";
 import { useCreateCompany } from "../../utils/companies";
@@ -25,12 +25,12 @@ function NewCompany() {
   }
 
   return (
-    <>
+    <Container>
       <h5>Create a new company</h5>
       {isError ? (
         <Alert color="danger">Failed to create a new company: {error}</Alert>
       ) : null}
       <CompanyForm onSubmit={handleSubmit} />
-    </>
+    </Container>
   );
 }
