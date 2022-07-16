@@ -7,19 +7,49 @@ import { Counter } from "./components/Counter";
 import { AppRoutes } from "./AppConstants";
 import { CompanyTable } from "./components/company/CompanyTable";
 import { NewCompany } from "./components/company/NewCompany";
+import {
+  ApplicationPaths,
+  LoginActions,
+  LogoutActions,
+} from "./components/api-authorization/ApiAuthorizationConstants";
+import { Login } from "./components/api-authorization/Login";
+import { Logout } from "./components/api-authorization/Logout";
 
 export { AuthenticatedApp };
 
 function AuthenticatedApp() {
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/counter" element={<Counter />} />
-        <Route path="/fetch-data" element={<FetchData />} />
-        <Route path={AppRoutes.Companies} element={<CompanyTable />} />
-        <Route path={AppRoutes.NewCompany} element={<NewCompany />} />
-      </Route>
-    </Routes>
+    <>
+      <Routes>
+        {getAuthorizationRoutes()}
+        <Route element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="/counter" element={<Counter />} />
+          <Route path="/fetch-data" element={<FetchData />} />
+          <Route path={AppRoutes.Companies} element={<CompanyTable />} />
+          <Route path={AppRoutes.NewCompany} element={<NewCompany />} />
+        </Route>
+      </Routes>
+    </>
+  );
+}
+
+function getAuthorizationRoutes() {
+  return (
+    <Route path={ApplicationPaths.ApiAuthorizationPrefix}>
+      <Route path={ApplicationPaths.Login} element={<Login action={LoginActions.Login}></Login>} />
+      <Route
+        path={ApplicationPaths.LoginCallback}
+        element={<Login action={LoginActions.LoginCallback}></Login>}
+      />
+      <Route
+        path={ApplicationPaths.Profile}
+        element={<Login action={LoginActions.Profile}></Login>}
+      />
+      <Route
+        path={ApplicationPaths.LogOut}
+        element={<Logout action={LogoutActions.Logout}></Logout>}
+      />
+    </Route>
   );
 }
