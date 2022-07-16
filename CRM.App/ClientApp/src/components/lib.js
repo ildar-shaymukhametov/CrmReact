@@ -6,8 +6,14 @@ export { LoadingButton, FormInput };
 
 function LoadingButton({ onClick, children, isLoading, ...props }) {
   return (
-    <Button {...props} onClick={onClick} disabled={isLoading}>
-      {isLoading ? <Spinner>Loading...</Spinner> : children}
+    <Button
+      {...props}
+      onClick={onClick}
+      disabled={isLoading}
+      className="d-flex align-items-center"
+    >
+      {isLoading ? <Spinner className="me-2">Loading...</Spinner> : null}
+      {children}
     </Button>
   );
 }
