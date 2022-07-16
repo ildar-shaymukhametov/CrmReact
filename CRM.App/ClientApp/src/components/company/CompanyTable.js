@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Button, Table } from "reactstrap";
 import { AppRoutes } from "../../AppConstants";
 import { useCompanies } from "../../utils/companies";
 
@@ -18,10 +19,10 @@ function CompanyTable() {
 
   return (
     <>
-      <div>
-        <Link to={AppRoutes.NewCompany}>New company</Link>
+      <div className="mb-2">
+        <Button color="success" tag={Link} to={AppRoutes.NewCompany}>New company</Button>
       </div>
-      <table>
+      <Table striped>
         <thead>
           <tr>
             <th>Id</th>
@@ -50,7 +51,7 @@ function CompanyTable() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     </>
   );
 }
