@@ -13,6 +13,7 @@ import {
 } from "./components/api-authorization/ApiAuthorizationConstants";
 import { Login } from "./components/api-authorization/Login";
 import { Logout } from "./components/api-authorization/Logout";
+import { AppRoutes } from "./AppConstants";
 
 export { AuthenticatedApp };
 
@@ -25,9 +26,9 @@ function AuthenticatedApp() {
           <Route index element={<Home />} />
           <Route path="counter" element={<Counter />} />
           <Route path="fetch-data" element={<FetchData />} />
-          <Route path="companies">
+          <Route path={AppRoutes.Companies}>
             <Route index element={<CompanyTable />} />
-            <Route path="new" element={<NewCompany />} />
+            <Route path={AppRoutes.NewCompany} element={<NewCompany />} />
           </Route>
         </Route>
       </Routes>
