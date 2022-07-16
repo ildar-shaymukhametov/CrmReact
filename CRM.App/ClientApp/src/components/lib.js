@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Input, Label, Spinner } from "reactstrap";
+import { Button, FormFeedback, Input, Label, Spinner } from "reactstrap";
 import { useField } from "formik";
 
 export { LoadingButton, FormInput };
@@ -14,13 +14,13 @@ function LoadingButton({ onClick, children, isLoading, ...props }) {
 
 function FormInput({ label, ...props }) {
   const [field, meta] = useField(props);
+  const invalid = meta.touched && Boolean(meta.error);
+  const valid = meta.touched && !Boolean(meta.error) && Boolean(meta.value);
   return (
     <>
       <Label for={props.id || props.name}>{label}</Label>
-      <Input {...field} {...props} />
-      {meta.touched && meta.error ? (
-        <div className="error">{meta.error}</div>
-      ) : null}
+      <Input {...field} {...props} invalid={invalid} valid={valid} />
+      {invalid ? <FormFeedback>{meta.error}</FormFeedback> : null}
     </>
   );
 }
