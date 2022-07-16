@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/react";
-import { Link } from "react-router-dom";
-import { Nav, NavItem, NavLink } from "reactstrap";
+import { NavLink as RRNavLink } from "react-router-dom";
+import { Nav, NavItem, NavLink as RSNavLink } from "reactstrap";
 
 export { SideMenu };
 
@@ -13,20 +13,9 @@ function SideMenu() {
     >
       <Nav vertical pills>
         <NavItem>
-          <NavLink className="active" href="#">
-            Link
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink href="#">Link</NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink href="#">Another Link</NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink tag={Link} to="/companies">
+          <RSNavLink tag={RRNavLink} to="/companies">
             Companies
-          </NavLink>
+          </RSNavLink>
         </NavItem>
       </Nav>
     </aside>
