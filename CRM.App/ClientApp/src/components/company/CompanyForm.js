@@ -57,9 +57,11 @@ function CompanyForm({
           <FormGroup>
             <FormInput label="Contacts" id="contacts" name="contacts" />
           </FormGroup>
-          <LoadingButton type="submit" isLoading={isSubmitting}>
-            Create new company
-          </LoadingButton>
+          <div className="d-flex justify-content-end">
+            <LoadingButton color="success" type="submit" isLoading={isSubmitting}>
+              Create new company
+            </LoadingButton>
+          </div>
         </Form>
       )}
     </Formik>
