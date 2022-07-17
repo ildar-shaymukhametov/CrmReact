@@ -17,7 +17,7 @@ function EditCompany() {
         state: { isCompanyUpdated: true, companyId: id },
       }),
   });
-  const { isError, error, run, reset } = useAsync();
+  const { isError, isLoading: isSubmitting, run, reset } = useAsync();
   const { data, isLoading, isError: isLoadingError } = useCompany(id);
 
   function handleSubmit(data) {
@@ -46,14 +46,13 @@ function EditCompany() {
           <BreadcrumbItem active>Edit company {id}</BreadcrumbItem>
         </Breadcrumb>
       </div>
+      {isError ? <Alert color="danger">Failed to update company</Alert> : null}
       <h5>Edit company {id}</h5>
-      {isError ? (
-        <Alert color="danger">Failed to update company: {error}</Alert>
-      ) : null}
       <CompanyForm
         submitButtonText="Save changes"
         initialValues={data}
         onSubmit={handleSubmit}
+        isSubmitting={isSubmitting}
       />
     </Container>
   );

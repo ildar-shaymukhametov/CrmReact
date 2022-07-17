@@ -25,6 +25,7 @@ function CompanyForm({
     inn: "",
   },
   submitButtonText,
+  isSubmitting,
 }) {
   return (
     <Formik
@@ -32,7 +33,7 @@ function CompanyForm({
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
-      {({ isSubmitting, handleSubmit }) => (
+      {({ handleSubmit }) => (
         <Form onSubmit={handleSubmit}>
           <FormGroup>
             <FormInput label="Type" id="type" name="type" />

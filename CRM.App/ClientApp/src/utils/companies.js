@@ -41,7 +41,7 @@ function useUpdateCompany(options) {
         const previousItems = queryClient.getQueryData("companies");
 
         queryClient.setQueryData("companies", (old) => {
-          return old.map((item) => {
+          return old?.map((item) => {
             return item.id === newItem.id ? { ...item, ...newItem } : item;
           });
         });
