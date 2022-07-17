@@ -174,7 +174,9 @@ describe("edit company", () => {
     const editCompanyButton = screen.getByLabelText(/edit company/i);
     await userEvent.click(editCompanyButton);
 
-    expect(await screen.findByRole("alert")).toHaveTextContent(
+    await waitForLoadingToFinish();
+
+    expect(screen.getByRole("alert")).toHaveTextContent(
       /failed to load company/i
     );
   });
