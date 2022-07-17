@@ -76,12 +76,6 @@ describe("edit company", () => {
       screen.queryByRole("heading", { name: editCompanyHeader })
     ).not.toBeInTheDocument();
 
-    server.use(
-      rest.get(ApiRoutes.GetCompany(":id"), async (req, res, ctx) => {
-        return res(ctx.json(company));
-      })
-    );
-
     const editCompanyButton = screen.getByLabelText(/edit company/i);
     await userEvent.click(editCompanyButton);
 
@@ -106,12 +100,6 @@ describe("edit company", () => {
 
   test("updates company", async () => {
     const company = await renderTable();
-
-    server.use(
-      rest.get(ApiRoutes.GetCompany(":id"), async (req, res, ctx) => {
-        return res(ctx.json(company));
-      })
-    );
 
     const editCompanyButton = screen.getByLabelText(/edit company/i);
     await userEvent.click(editCompanyButton);
@@ -212,6 +200,9 @@ async function renderTable() {
   server.use(
     rest.get(ApiRoutes.Companies, async (req, res, ctx) => {
       return res(ctx.json([company]));
+    }),
+    rest.get(ApiRoutes.GetCompany(":id"), async (req, res, ctx) => {
+      return res(ctx.json(company));
     })
   );
   await render(<App />, { route: AppRoutes.Companies });
