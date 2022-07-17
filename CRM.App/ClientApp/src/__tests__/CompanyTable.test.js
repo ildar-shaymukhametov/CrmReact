@@ -1,7 +1,15 @@
 import React from "react";
 import { buildCompany } from "../test/generate";
 import { rest, server } from "../test/server";
-import { login, render, screen, userEvent, waitForLoadingToFinish, within, waitFor } from "../test/utils";
+import {
+  login,
+  render,
+  screen,
+  userEvent,
+  waitForLoadingToFinish,
+  within,
+  waitFor,
+} from "../test/utils";
 import { App } from "../App";
 import { ApiRoutes, AppRoutes } from "../AppConstants";
 
@@ -63,6 +71,97 @@ test("creates new company", async () => {
   });
 });
 
+test("shows update view", async () => {
+  const company = await renderTable();
+  const editCompanyHeader = new RegExp(`edit company ${company.id}`, "i");
+
+  expect(
+    screen.queryByRole("heading", { name: editCompanyHeader })
+  ).not.toBeInTheDocument();
+
+  const editCompanyButton = screen.getByLabelText(/edit company/i);
+  await userEvent.click(editCompanyButton);
+
+  await waitForLoadingToFinish();
+
+  expect(
+    screen.getByRole("heading", {
+      name: editCompanyHeader,
+    })
+  ).toBeInTheDocument();
+
+  const [type, name, inn, address, ceo, phone, email, contacts] = getInputs();
+  expect(type).toHaveValue(company.type);
+  expect(name).toHaveValue(company.name);
+  expect(inn).toHaveValue(company.inn);
+  expect(address).toHaveValue(company.address);
+  expect(ceo).toHaveValue(company.ceo);
+  expect(phone).toHaveValue(company.phone);
+  expect(email).toHaveValue(company.email);
+  expect(contacts).toHaveValue(company.contacts);
+});
+
+test("updates company", async () => {
+  const company = await renderTable();
+
+  const editCompanyButton = screen.getByLabelText(/edit company/i);
+  await userEvent.click(editCompanyButton);
+
+  await waitForLoadingToFinish();
+
+  const inputs = getInputs();
+  for (const element of inputs) {
+    await userEvent.clear(element);
+  }
+
+  const [type, name, inn, address, ceo, phone, email, contacts] = inputs;
+  const updatedCompany = buildCompany();
+  updatedCompany.id = company.id;
+  await userEvent.type(type, updatedCompany.type);
+  await userEvent.type(name, updatedCompany.name);
+  await userEvent.type(inn, updatedCompany.inn);
+  await userEvent.type(address, updatedCompany.address);
+  await userEvent.type(ceo, updatedCompany.ceo);
+  await userEvent.type(phone, updatedCompany.phone);
+  await userEvent.type(email, updatedCompany.email);
+  await userEvent.type(contacts, updatedCompany.contacts);
+
+  expect(screen.queryAllByLabelText(/validation error/i)).toHaveLength(0);
+
+  server.resetHandlers(
+    rest.get(ApiRoutes.Companies, async (req, res, ctx) => {
+      return res(ctx.json([updatedCompany]));
+    }),
+    rest.put(ApiRoutes.UpdateCompany(":id"), async (req, res, ctx) => {
+      return res(ctx.json(null), ctx.status(204));
+    })
+  );
+
+  const saveChangesButton = screen.getByRole("button", {
+    name: /save changes/i,
+  });
+  await userEvent.click(saveChangesButton);
+  expect(saveChangesButton).toBeDisabled();
+  await waitForLoadingToFinish();
+
+  await waitFor(() => {
+    const inTable = within(screen.getByRole("table"));
+    expectCompanyToBeInTable(inTable, updatedCompany);
+  });
+});
+
+function getInputs() {
+  const type = screen.getByRole("textbox", { name: /type/i });
+  const name = screen.getByRole("textbox", { name: /name/i });
+  const inn = screen.getByRole("textbox", { name: /inn/i });
+  const address = screen.getByRole("textbox", { name: /address/i });
+  const ceo = screen.getByRole("textbox", { name: /ceo/i });
+  const phone = screen.getByRole("textbox", { name: /phone/i });
+  const email = screen.getByRole("textbox", { name: /email/i });
+  const contacts = screen.getByRole("textbox", { name: /contacts/i });
+  return [type, name, inn, address, ceo, phone, email, contacts];
+}
+
 function expectCompanyToBeInTable(inTable, company) {
   expect(inTable.getByText(company.id)).toBeInTheDocument();
   expect(inTable.getByText(company.type)).toBeInTheDocument();
@@ -81,6 +180,9 @@ async function renderTable() {
   server.use(
     rest.get(ApiRoutes.Companies, async (req, res, ctx) => {
       return res(ctx.json([company]));
+    }),
+    rest.get(ApiRoutes.GetCompany(":id"), async (req, res, ctx) => {
+      return res(ctx.json(company));
     })
   );
   await render(<App />, { route: AppRoutes.Companies });

@@ -40,6 +40,7 @@ function CompanyTable() {
             <th>Phone</th>
             <th>Email</th>
             <th>Contacts</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -54,6 +55,13 @@ function CompanyTable() {
               <td>{company.phone}</td>
               <td>{company.email}</td>
               <td>{company.contacts}</td>
+              <td>
+                <Button
+                  tag={Link}
+                  to={AppRoutes.UpdateCompany(company.id)}
+                  aria-label="Edit company"
+                ></Button>
+              </td>
             </tr>
           ))}
         </tbody>

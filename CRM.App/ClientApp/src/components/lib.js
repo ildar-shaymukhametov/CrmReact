@@ -26,7 +26,7 @@ function FormInput({ label, ...props }) {
     <>
       <Label for={props.id || props.name}>{label}</Label>
       <Input {...field} {...props} invalid={invalid} valid={valid} />
-      {invalid ? <FormFeedback>{meta.error}</FormFeedback> : null}
+      {invalid ? <FormFeedback aria-label="Validation error">{meta.error}</FormFeedback> : null}
     </>
   );
 }

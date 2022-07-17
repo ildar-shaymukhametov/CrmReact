@@ -14,6 +14,7 @@ import {
 import { Login } from "./components/api-authorization/Login";
 import { Logout } from "./components/api-authorization/Logout";
 import { AppRoutes } from "./AppConstants";
+import { EditCompany } from "./components/company/EditCompany";
 
 export { AuthenticatedApp };
 
@@ -29,6 +30,10 @@ function AuthenticatedApp() {
           <Route path={AppRoutes.Companies}>
             <Route index element={<CompanyTable />} />
             <Route path={AppRoutes.NewCompany} element={<NewCompany />} />
+            <Route
+              path={AppRoutes.UpdateCompany(":id")}
+              element={<EditCompany />}
+            />
           </Route>
         </Route>
       </Routes>
@@ -39,7 +44,10 @@ function AuthenticatedApp() {
 function getAuthorizationRoutes() {
   return (
     <Route path={ApplicationPaths.ApiAuthorizationPrefix}>
-      <Route path={ApplicationPaths.Login} element={<Login action={LoginActions.Login}></Login>} />
+      <Route
+        path={ApplicationPaths.Login}
+        element={<Login action={LoginActions.Login}></Login>}
+      />
       <Route
         path={ApplicationPaths.LoginCallback}
         element={<Login action={LoginActions.LoginCallback}></Login>}
