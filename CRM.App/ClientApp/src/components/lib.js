@@ -2,7 +2,7 @@ import React from "react";
 import { Button, FormFeedback, Input, Label, Spinner } from "reactstrap";
 import { useField } from "formik";
 
-export { LoadingButton, FormInput };
+export { LoadingButton, FormInput, FullPageErrorFallback };
 
 function LoadingButton({ onClick, children, isLoading, ...props }) {
   return (
@@ -26,7 +26,28 @@ function FormInput({ label, ...props }) {
     <>
       <Label for={props.id || props.name}>{label}</Label>
       <Input {...field} {...props} invalid={invalid} valid={valid} />
-      {invalid ? <FormFeedback aria-label="Validation error">{meta.error}</FormFeedback> : null}
+      {invalid ? (
+        <FormFeedback aria-label="Validation error">{meta.error}</FormFeedback>
+      ) : null}
     </>
+  );
+}
+
+function FullPageErrorFallback({ error }) {
+  return (
+    <div
+      role="alert"
+      css={{
+        color: "#ef5350",
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <p>Uh oh... There's a problem. Try refreshing the app.</p>
+      <pre>{error.message}</pre>
+    </div>
   );
 }

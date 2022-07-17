@@ -15,12 +15,14 @@ import { Login } from "./components/api-authorization/Login";
 import { Logout } from "./components/api-authorization/Logout";
 import { AppRoutes } from "./AppConstants";
 import { EditCompany } from "./components/company/EditCompany";
+import { ErrorBoundary } from "react-error-boundary";
+import { FullPageErrorFallback } from "./components/lib";
 
 export { AuthenticatedApp };
 
 function AuthenticatedApp() {
   return (
-    <>
+    <ErrorBoundary FallbackComponent={FullPageErrorFallback}>
       <Routes>
         {getAuthorizationRoutes()}
         <Route element={<Layout />}>
@@ -37,7 +39,7 @@ function AuthenticatedApp() {
           </Route>
         </Route>
       </Routes>
-    </>
+    </ErrorBoundary>
   );
 }
 
