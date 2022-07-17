@@ -45,7 +45,7 @@ test("creates company", async () => {
   await userEvent.type(email, company.email);
   await userEvent.type(contacts, company.contacts);
 
-  server.resetHandlers(
+  server.use(
     rest.post(ApiRoutes.Companies, async (req, res, ctx) => {
       return res(ctx.json(company.id));
     }),
@@ -137,7 +137,7 @@ describe("edit company", () => {
 
     expect(screen.queryAllByLabelText(/validation error/i)).toHaveLength(0);
 
-    server.resetHandlers(
+    server.use(
       rest.get(ApiRoutes.Companies, async (req, res, ctx) => {
         return res(ctx.json([updatedCompany]));
       }),
