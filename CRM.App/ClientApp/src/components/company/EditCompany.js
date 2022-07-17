@@ -8,6 +8,22 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 
 export { EditCompany };
 
+function Layout({ children }) {
+  return (
+    <Container>
+      <div>
+        <Breadcrumb>
+          <BreadcrumbItem>
+            <Link to={AppRoutes.Companies}>Companies</Link>
+          </BreadcrumbItem>
+          <BreadcrumbItem active>Edit company</BreadcrumbItem>
+        </Breadcrumb>
+      </div>
+      {children}
+    </Container>
+  );
+}
+
 function EditCompany() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -29,19 +45,15 @@ function EditCompany() {
   }
 
   if (isLoadingError) {
-    return <Alert color="danger">Failed to load company</Alert>;
+    return (
+      <Layout>
+        <Alert color="danger">Failed to load company {id}</Alert>
+      </Layout>
+    );
   }
 
   return (
-    <Container>
-      <div>
-        <Breadcrumb>
-          <BreadcrumbItem>
-            <Link to={AppRoutes.Companies}>Companies</Link>
-          </BreadcrumbItem>
-          <BreadcrumbItem active>Edit company {id}</BreadcrumbItem>
-        </Breadcrumb>
-      </div>
+    <Layout>
       {isError ? <Alert color="danger">Failed to update company</Alert> : null}
       <h5>Edit company {id}</h5>
       <CompanyForm
@@ -50,6 +62,6 @@ function EditCompany() {
         onSubmit={handleSubmit}
         isSubmitting={isSubmitting}
       />
-    </Container>
+    </Layout>
   );
 }
