@@ -5,12 +5,13 @@ import { useAsync } from "../../utils/hooks";
 import { useCreateCompany } from "../../utils/companies";
 import { AppRoutes } from "../../AppConstants";
 import { Link } from "react-router-dom";
+import { LoadingButton } from "../lib";
 
 export { NewCompany };
 
 function NewCompany() {
   const { mutateAsync: handleCreateCompany } = useCreateCompany();
-  const { isError, error, run, reset } = useAsync();
+  const { isLoading, isError, error, run, reset } = useAsync();
 
   function handleSubmit(data) {
     if (isError) {
@@ -34,7 +35,13 @@ function NewCompany() {
       {isError ? (
         <Alert color="danger">Failed to create a new company: {error}</Alert>
       ) : null}
-      <CompanyForm onSubmit={handleSubmit} />
+      <CompanyForm onSubmit={handleSubmit}>
+        <div className="d-flex justify-content-end">
+          <LoadingButton color="success" type="submit" isLoading={isLoading}>
+            Create new company
+          </LoadingButton>
+        </div>
+      </CompanyForm>
     </Container>
   );
 }
