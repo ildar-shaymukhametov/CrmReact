@@ -13,32 +13,28 @@ import {
 import { App } from "../App";
 import { ApiRoutes, AppRoutes } from "../AppConstants";
 
-test("renders company table", async () => {
+test("renders table", async () => {
   const company = await renderTable();
 
   const inTable = within(screen.getByRole("table"));
   expectCompanyToBeInTable(inTable, company);
 });
 
-test("creates new company", async () => {
+test("creates company", async () => {
   await renderTable();
 
-  expect(screen.queryByRole("heading", { name: /create a new company/i })).not.toBeInTheDocument();
+  expect(
+    screen.queryByRole("heading", { name: /create a new company/i })
+  ).not.toBeInTheDocument();
 
   const newCompanyButton = screen.getByRole("link", { name: /new company/i });
   await userEvent.click(newCompanyButton);
 
-  await screen.findByRole("heading", { name: /create a new company/i });
+  expect(
+    screen.queryByRole("heading", { name: /create a new company/i })
+  ).toBeInTheDocument();
 
-  const type = screen.getByRole("textbox", { name: /type/i });
-  const name = screen.getByRole("textbox", { name: /name/i });
-  const inn = screen.getByRole("textbox", { name: /inn/i });
-  const address = screen.getByRole("textbox", { name: /address/i });
-  const ceo = screen.getByRole("textbox", { name: /ceo/i });
-  const phone = screen.getByRole("textbox", { name: /phone/i });
-  const email = screen.getByRole("textbox", { name: /email/i });
-  const contacts = screen.getByRole("textbox", { name: /contacts/i });
-
+  const [type, name, inn, address, ceo, phone, email, contacts] = getInputs();
   const company = buildCompany();
   await userEvent.type(type, company.type);
   await userEvent.type(name, company.name);
@@ -58,11 +54,11 @@ test("creates new company", async () => {
     })
   );
 
-  const createNewCompanyButton = screen.getByRole("button", {
+  const submit = screen.getByRole("button", {
     name: /create new company/i,
   });
-  await userEvent.click(createNewCompanyButton);
-  expect(createNewCompanyButton).toBeDisabled();
+  await userEvent.click(submit);
+  expect(submit).toBeDisabled();
 
   await waitForLoadingToFinish();
   await waitFor(() => {
@@ -137,11 +133,11 @@ test("updates company", async () => {
     })
   );
 
-  const saveChangesButton = screen.getByRole("button", {
+  const submit = screen.getByRole("button", {
     name: /save changes/i,
   });
-  await userEvent.click(saveChangesButton);
-  expect(saveChangesButton).toBeDisabled();
+  await userEvent.click(submit);
+  expect(submit).toBeDisabled();
   await waitForLoadingToFinish();
 
   await waitFor(() => {
