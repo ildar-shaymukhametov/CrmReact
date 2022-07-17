@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, FormGroup } from "reactstrap";
-import { FormInput } from "../lib";
+import { FormInput, LoadingButton } from "../lib";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
@@ -24,7 +24,7 @@ function CompanyForm({
     ceo: "",
     inn: "",
   },
-  children,
+  submitButtonText,
 }) {
   return (
     <Formik
@@ -32,7 +32,7 @@ function CompanyForm({
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
-      {({ handleSubmit }) => (
+      {({ isSubmitting, handleSubmit }) => (
         <Form onSubmit={handleSubmit}>
           <FormGroup>
             <FormInput label="Type" id="type" name="type" />
@@ -58,7 +58,15 @@ function CompanyForm({
           <FormGroup>
             <FormInput label="Contacts" id="contacts" name="contacts" />
           </FormGroup>
-          {children}
+          <div className="d-flex justify-content-end">
+            <LoadingButton
+              color="success"
+              type="submit"
+              isLoading={isSubmitting}
+            >
+              {submitButtonText}
+            </LoadingButton>
+          </div>
         </Form>
       )}
     </Formik>

@@ -5,7 +5,6 @@ import { useAsync } from "../../utils/hooks";
 import { useCompany, useUpdateCompany } from "../../utils/companies";
 import { AppRoutes } from "../../AppConstants";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { LoadingButton } from "../lib";
 
 export { EditCompany };
 
@@ -18,7 +17,7 @@ function EditCompany() {
         state: { isCompanyUpdated: true, companyId: id },
       }),
   });
-  const { isLoading: isSubmitting, isError, error, run, reset } = useAsync();
+  const { isError, error, run, reset } = useAsync();
   const { data, isLoading } = useCompany(id);
 
   function handleSubmit(data) {
@@ -47,13 +46,11 @@ function EditCompany() {
       {isError ? (
         <Alert color="danger">Failed to update company: {error}</Alert>
       ) : null}
-      <CompanyForm initialValues={data} onSubmit={handleSubmit}>
-        <div className="d-flex justify-content-end">
-          <LoadingButton color="success" type="submit" isLoading={isSubmitting}>
-            Save changes
-          </LoadingButton>
-        </div>
-      </CompanyForm>
+      <CompanyForm
+        submitButtonText="Save changes"
+        initialValues={data}
+        onSubmit={handleSubmit}
+      />
     </Container>
   );
 }
