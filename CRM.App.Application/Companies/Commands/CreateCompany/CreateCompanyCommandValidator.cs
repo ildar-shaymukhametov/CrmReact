@@ -9,5 +9,9 @@ public class CreateCompanyCommandValidator : AbstractValidator<CreateCompanyComm
         RuleFor(x => x.Name)
             .MaximumLength(200)
             .NotEmpty();
+        RuleFor(x => x.Email)
+            .EmailAddress();
+        RuleFor(x => x.Inn)
+            .Length(10);
     }
 }
