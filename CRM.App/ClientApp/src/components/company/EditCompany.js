@@ -18,7 +18,7 @@ function EditCompany() {
       }),
   });
   const { isError, error, run, reset } = useAsync();
-  const { data, isLoading } = useCompany(id);
+  const { data, isLoading, isError: isLoadingError } = useCompany(id);
 
   function handleSubmit(data) {
     if (isError) {
@@ -30,6 +30,10 @@ function EditCompany() {
 
   if (isLoading) {
     return <div>Loading...</div>;
+  }
+
+  if (isLoadingError) {
+    return <Alert color="danger">Failed to load company</Alert>;
   }
 
   return (

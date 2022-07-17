@@ -67,82 +67,102 @@ test("creates company", async () => {
   });
 });
 
-test("shows update view", async () => {
-  const company = await renderTable();
-  const editCompanyHeader = new RegExp(`edit company ${company.id}`, "i");
+describe("edit company", () => {
+  test("renders view", async () => {
+    const company = await renderTable();
+    const editCompanyHeader = new RegExp(`edit company ${company.id}`, "i");
 
-  expect(
-    screen.queryByRole("heading", { name: editCompanyHeader })
-  ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("heading", { name: editCompanyHeader })
+    ).not.toBeInTheDocument();
 
-  const editCompanyButton = screen.getByLabelText(/edit company/i);
-  await userEvent.click(editCompanyButton);
+    const editCompanyButton = screen.getByLabelText(/edit company/i);
+    await userEvent.click(editCompanyButton);
 
-  await waitForLoadingToFinish();
+    await waitForLoadingToFinish();
 
-  expect(
-    screen.getByRole("heading", {
-      name: editCompanyHeader,
-    })
-  ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", {
+        name: editCompanyHeader,
+      })
+    ).toBeInTheDocument();
 
-  const [type, name, inn, address, ceo, phone, email, contacts] = getInputs();
-  expect(type).toHaveValue(company.type);
-  expect(name).toHaveValue(company.name);
-  expect(inn).toHaveValue(company.inn);
-  expect(address).toHaveValue(company.address);
-  expect(ceo).toHaveValue(company.ceo);
-  expect(phone).toHaveValue(company.phone);
-  expect(email).toHaveValue(company.email);
-  expect(contacts).toHaveValue(company.contacts);
-});
-
-test("updates company", async () => {
-  const company = await renderTable();
-
-  const editCompanyButton = screen.getByLabelText(/edit company/i);
-  await userEvent.click(editCompanyButton);
-
-  await waitForLoadingToFinish();
-
-  const inputs = getInputs();
-  for (const element of inputs) {
-    await userEvent.clear(element);
-  }
-
-  const [type, name, inn, address, ceo, phone, email, contacts] = inputs;
-  const updatedCompany = buildCompany();
-  updatedCompany.id = company.id;
-  await userEvent.type(type, updatedCompany.type);
-  await userEvent.type(name, updatedCompany.name);
-  await userEvent.type(inn, updatedCompany.inn);
-  await userEvent.type(address, updatedCompany.address);
-  await userEvent.type(ceo, updatedCompany.ceo);
-  await userEvent.type(phone, updatedCompany.phone);
-  await userEvent.type(email, updatedCompany.email);
-  await userEvent.type(contacts, updatedCompany.contacts);
-
-  expect(screen.queryAllByLabelText(/validation error/i)).toHaveLength(0);
-
-  server.resetHandlers(
-    rest.get(ApiRoutes.Companies, async (req, res, ctx) => {
-      return res(ctx.json([updatedCompany]));
-    }),
-    rest.put(ApiRoutes.UpdateCompany(":id"), async (req, res, ctx) => {
-      return res(ctx.json(null), ctx.status(204));
-    })
-  );
-
-  const submit = screen.getByRole("button", {
-    name: /save changes/i,
+    const [type, name, inn, address, ceo, phone, email, contacts] = getInputs();
+    expect(type).toHaveValue(company.type);
+    expect(name).toHaveValue(company.name);
+    expect(inn).toHaveValue(company.inn);
+    expect(address).toHaveValue(company.address);
+    expect(ceo).toHaveValue(company.ceo);
+    expect(phone).toHaveValue(company.phone);
+    expect(email).toHaveValue(company.email);
+    expect(contacts).toHaveValue(company.contacts);
   });
-  await userEvent.click(submit);
-  expect(submit).toBeDisabled();
-  await waitForLoadingToFinish();
 
-  await waitFor(() => {
-    const inTable = within(screen.getByRole("table"));
-    expectCompanyToBeInTable(inTable, updatedCompany);
+  test("updates company", async () => {
+    const company = await renderTable();
+
+    const editCompanyButton = screen.getByLabelText(/edit company/i);
+    await userEvent.click(editCompanyButton);
+
+    await waitForLoadingToFinish();
+
+    const inputs = getInputs();
+    for (const element of inputs) {
+      await userEvent.clear(element);
+    }
+
+    const [type, name, inn, address, ceo, phone, email, contacts] = inputs;
+    const updatedCompany = buildCompany();
+    updatedCompany.id = company.id;
+    await userEvent.type(type, updatedCompany.type);
+    await userEvent.type(name, updatedCompany.name);
+    await userEvent.type(inn, updatedCompany.inn);
+    await userEvent.type(address, updatedCompany.address);
+    await userEvent.type(ceo, updatedCompany.ceo);
+    await userEvent.type(phone, updatedCompany.phone);
+    await userEvent.type(email, updatedCompany.email);
+    await userEvent.type(contacts, updatedCompany.contacts);
+
+    expect(screen.queryAllByLabelText(/validation error/i)).toHaveLength(0);
+
+    server.resetHandlers(
+      rest.get(ApiRoutes.Companies, async (req, res, ctx) => {
+        return res(ctx.json([updatedCompany]));
+      }),
+      rest.put(ApiRoutes.UpdateCompany(":id"), async (req, res, ctx) => {
+        return res(ctx.json(null), ctx.status(204));
+      })
+    );
+
+    const submit = screen.getByRole("button", {
+      name: /save changes/i,
+    });
+    await userEvent.click(submit);
+    expect(submit).toBeDisabled();
+    await waitForLoadingToFinish();
+
+    await waitFor(() => {
+      const inTable = within(screen.getByRole("table"));
+      expectCompanyToBeInTable(inTable, updatedCompany);
+    });
+  });
+
+  test("shows error if loading failed", async () => {
+    await renderTable();
+
+    server.use(
+      rest.get(ApiRoutes.GetCompany(":id"), async (req, res, ctx) => {
+        return res(
+          ctx.status(404),
+          ctx.json({ status: 404, message: "Company not found" })
+        );
+      })
+    );
+
+    const editCompanyButton = screen.getByLabelText(/edit company/i);
+    await userEvent.click(editCompanyButton);
+
+    expect(await screen.findByRole("alert")).toHaveTextContent(/failed to load company/i);
   });
 });
 
