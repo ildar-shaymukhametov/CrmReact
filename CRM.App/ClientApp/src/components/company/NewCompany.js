@@ -10,14 +10,10 @@ export { NewCompany };
 
 function NewCompany() {
   const { mutateAsync: handleCreateCompany } = useCreateCompany();
-  const { isError, isLoading: isSubmitting, run, reset } = useAsync();
+  const { isError, isLoading: isSubmitting, run } = useAsync();
 
   function handleSubmit(data) {
-    if (isError) {
-      reset();
-    } else {
-      run(handleCreateCompany(data));
-    }
+    run(handleCreateCompany(data));
   }
 
   return (

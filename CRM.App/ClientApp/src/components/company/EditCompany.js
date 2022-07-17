@@ -17,15 +17,11 @@ function EditCompany() {
         state: { isCompanyUpdated: true, companyId: id },
       }),
   });
-  const { isError, isLoading: isSubmitting, run, reset } = useAsync();
+  const { isError, isLoading: isSubmitting, run } = useAsync();
   const { data, isLoading, isError: isLoadingError } = useCompany(id);
 
   function handleSubmit(data) {
-    if (isError) {
-      reset();
-    } else {
-      run(updateCompany(data));
-    }
+    run(updateCompany(data));
   }
 
   if (isLoading) {
